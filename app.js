@@ -7,12 +7,14 @@
 // 프로젝트 관리
 // 백엔트랑 프론트랑 나눠서 깃 레포 파놓고 푸쉬
 
-// npm i express express-session cors
+// npm i express express-session cors sequelize mysql2 dotenv
 
 const express = require("express");
 const PORT = 5026;
 const cors = require("cors");
 const session = require("express-session");
+const dot = require("dotenv").config();
+const {sequelize} = require("./models");
 
 const app = express();
 
@@ -30,8 +32,25 @@ app.use(cors({
     // 도메인 허용 옵션
     // 접근을 허용할 도메인
     // 여러개의 도메인을 허용하고 싶다하면 배열의 형태로 여러 도메인을 넣어주면 된다.
-    origin : "http://127.0.0.1:5500"
+    origin : "http://127.0.0.1:5500",
+    
+    // 클라이언트의 요청에 쿠키를 포함할지의 속성
+    credentials : true,
 }));
+
+app.use(session({
+    secret : process.env.SESSION_KEY,
+    resave : false,
+    saveUninitialized : false
+}));
+
+sequelize.sync({force : false})
+.then(()=>{
+    console.log("mysql database connected");
+}).catch((err)=>{
+    console.log(err);
+    console.log("mysql database NOT connected");
+});
 
 //test
 app.get("/",(req,res)=>{
