@@ -35,3 +35,11 @@ exports.Login = async (req,res)=>{
         console.log("error in login controller");
     };
 };
+
+exports.viewUser = async (req,res)=>{
+    const {acc_decoded} = req;
+    console.log(acc_decoded);
+    const user = await User.findOne({where : {name : acc_decoded.name}});
+    // json 형태로 데이터를 응답
+    res.json(user);
+};
