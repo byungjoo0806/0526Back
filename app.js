@@ -25,6 +25,14 @@ app.use(express.urlencoded({extended : false}));
 // Access-control-Allow-origin 을 헤더에 포함해서 접근을 허용하고 응답하고
 // 브라우저에 응답을 받은 뒤, 헤더값을 확인해서 접근을 허용 또는 차단한다.
 
+// 미들웨어로 추가
+app.use(cors({
+    // 도메인 허용 옵션
+    // 접근을 허용할 도메인
+    // 여러개의 도메인을 허용하고 싶다하면 배열의 형태로 여러 도메인을 넣어주면 된다.
+    origin : "http://127.0.0.1:5500"
+}));
+
 //test
 app.get("/",(req,res)=>{
     res.send("here's server's response");
