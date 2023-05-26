@@ -15,7 +15,8 @@ exports.Login = async (req,res)=>{
         if(same){
             let token = jwt.sign({
                 name,
-                age
+                age,
+                username : user.username
             },process.env.ACCESS_TOKEN_KEY,{
                 expiresIn : "20m"
             });
@@ -38,8 +39,16 @@ exports.Login = async (req,res)=>{
 
 exports.viewUser = async (req,res)=>{
     const {acc_decoded} = req;
-    console.log(acc_decoded);
+    // console.log(acc_decoded);
     const user = await User.findOne({where : {name : acc_decoded.name}});
     // json 형태로 데이터를 응답
     res.json(user);
+};
+
+exports.editInfo = async (req,res)=>{
+    const {name,age,password} = req.body;
+    const {acc_decoded} = req;
+    const hash = bcrypt.hashSync(password,10);
+    await User.update({name : name, age : age, password : hash},{where : {username : acc_decoded.username}});
+    res.redirect("http://127.0.0.1:5500/frontend/main.html");
 };

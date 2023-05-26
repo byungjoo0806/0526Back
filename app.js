@@ -65,6 +65,13 @@ app.use("/login",loginRouter);
 const signupRouter = require("./routers/signup");
 app.use("/signup",signupRouter);
 
+// post page
+const postRouter = require("./routers/post");
+app.use("/post",postRouter);
+
+// my info edit page
+const myinfoRouter = require("./routers/myinfo");
+app.use("/myinfo",myinfoRouter);
 
 app.listen(PORT,()=>{
     console.log("server open");

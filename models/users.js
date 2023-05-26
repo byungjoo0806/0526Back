@@ -13,7 +13,7 @@ class User extends Sequelize.Model {
                 allowNull : false
             },
             username : {
-                type : Sequelize.STRING(20),
+                type : Sequelize.STRING(50),
                 allowNull : true
             },
             password : {
@@ -30,8 +30,12 @@ class User extends Sequelize.Model {
             timestamps : true,
             paranoid : false, // 삭제시간 column 자동 생성 유무
             underscored : false // underscored - do you want to use Camel case?
-        })
-    }
+        });
+    };
+
+    static associate(db){
+        db.User.hasMany(db.Post, {foreignKey : "by", sourceKey : "username"});
+    };
 };
 
 module.exports = User;
