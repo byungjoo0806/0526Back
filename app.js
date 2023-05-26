@@ -53,9 +53,18 @@ sequelize.sync({force : false})
 });
 
 //test
-app.get("/",(req,res)=>{
-    res.send("here's server's response");
-});
+// app.get("/",(req,res)=>{
+//     res.send("here's server's response");
+// });
+
+// login page
+const loginRouter = require("./routers/login");
+app.use("/login",loginRouter);
+
+// signup page
+const signupRouter = require("./routers/signup");
+app.use("/signup",signupRouter);
+
 
 app.listen(PORT,()=>{
     console.log("server open");
