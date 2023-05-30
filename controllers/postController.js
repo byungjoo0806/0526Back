@@ -19,7 +19,7 @@ exports.Add = async (req,res)=>{
         content : content,
         by : req.acc_decoded.username
     });
-    res.redirect("http://127.0.0.1:5500/frontend/post.html");
+    res.redirect("http://127.0.0.1:5501/frontend/post.html");
 };
 
 exports.myPost = async (req,res)=>{

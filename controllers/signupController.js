@@ -15,7 +15,7 @@ exports.Signup = async (req,res)=>{
             username,
             password : hash
         });
-        res.redirect("http://127.0.0.1:5500/frontend/login.html");
+        res.redirect("http://127.0.0.1:5501/frontend/login.html");
     } catch (error) {
         console.log(error);
         console.log("error in signup controller");

@@ -27,7 +27,7 @@ exports.Login = async (req,res)=>{
             // return res.send("login successful");
 
             // 이런 경우는 배포된 프론트의 경로
-            return res.redirect("http://127.0.0.1:5500/frontend/main.html");
+            return res.redirect("http://127.0.0.1:5501/frontend/main.html");
         }else{
             return res.send("please check your password");
         };
@@ -46,9 +46,19 @@ exports.viewUser = async (req,res)=>{
 };
 
 exports.editInfo = async (req,res)=>{
-    const {name,age,password} = req.body;
+    const {name,age,password,profileImage} = req.body;
     const {acc_decoded} = req;
+    // console.log(profileImage);
+    // console.log(acc_decoded);
+    // console.log(Date.now());
     const hash = bcrypt.hashSync(password,10);
     await User.update({name : name, age : age, password : hash},{where : {username : acc_decoded.username}});
-    res.redirect("http://127.0.0.1:5500/frontend/main.html");
+    // res.redirect("http://127.0.0.1:5501/frontend/main.html");
+};
+
+exports.userPic = async (req,res)=>{
+    const {profileImage} = req.body;
+    const {acc_decoded} = req;
+    await User.update({profileImage : profileImage},{where : {username : acc_decoded.username}});
+    res.redirect("http://127.0.0.1:5501/frontend/main.html");
 };

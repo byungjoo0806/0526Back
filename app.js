@@ -15,10 +15,12 @@ const cors = require("cors");
 const session = require("express-session");
 const dot = require("dotenv").config();
 const {sequelize} = require("./models");
+const path = require("path");
 
 const app = express();
 
 app.use(express.urlencoded({extended : false}));
+app.use(express.json());
 
 // 다른 도메인에서 악의적으로 접근할 수 없도록
 // 도메인 접근시 발생하는 보안 정책
@@ -32,7 +34,7 @@ app.use(cors({
     // 도메인 허용 옵션
     // 접근을 허용할 도메인
     // 여러개의 도메인을 허용하고 싶다하면 배열의 형태로 여러 도메인을 넣어주면 된다.
-    origin : "http://127.0.0.1:5500",
+    origin : "http://127.0.0.1:5501",
     
     // 클라이언트의 요청에 쿠키를 포함할지의 속성
     credentials : true,
@@ -72,6 +74,11 @@ app.use("/post",postRouter);
 // my info edit page
 const myinfoRouter = require("./routers/myinfo");
 app.use("/myinfo",myinfoRouter);
+
+// profile image
+const uploadRouter = require("./routers/upload");
+app.use("/upload",uploadRouter);
+app.use("/img",express.static(path.join(__dirname,"uploads")));
 
 app.listen(PORT,()=>{
     console.log("server open");

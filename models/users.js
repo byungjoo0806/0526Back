@@ -19,6 +19,10 @@ class User extends Sequelize.Model {
             password : {
                 type : Sequelize.STRING(64),
                 allowNull : true
+            },
+            profileImage : {
+                type : Sequelize.STRING(128),
+                defaultValue : "./img/basic_profile.jpeg"
             }
         },{
             // table settings
